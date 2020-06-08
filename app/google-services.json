@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "936844773607",
+    "firebase_url": "https://discator-70243.firebaseio.com",
+    "project_id": "discator-70243",
+    "storage_bucket": "discator-70243.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936844773607:android:e1926e45fc528db7cf3a42",
+        "android_client_info": {
+          "package_name": "com.proyecto.discator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936844773607-pi3aipkr4ibcgslg9is5kiq7b1g7fljv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.proyecto.discator",
+            "certificate_hash": "bd71a5fb986a9b7462d2f452893090aa729ecebf"
+          }
+        },
+        {
+          "client_id": "936844773607-b6q4325me3mm66nbll9v3cc3tgjofchs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7-F8LoZnfivOoBCGYugGsp9OsyriqBjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936844773607-b6q4325me3mm66nbll9v3cc3tgjofchs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
