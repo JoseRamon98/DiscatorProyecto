@@ -4,17 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PrincipalActivity">
+    tools:context=".ListaActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        android:orientation="vertical">
+
+        <EditText android:id="@+id/textoAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Introduce el nombre del album"/>
+
+        <Button android:id="@+id/botonAñadirALista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Añadir disco a la lista"/>
 
         <ListView
-            android:id="@+id/listadoArtistas"
+            android:id="@+id/listaAlbumes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"

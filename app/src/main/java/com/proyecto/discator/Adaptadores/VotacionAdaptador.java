@@ -30,7 +30,7 @@ public class VotacionAdaptador extends ArrayAdapter<Votacion>
         //Obtener el item del layout item_lista
         View item = LayoutInflater.from(getContext()).inflate(R.layout.item_lista_votaciones, null);
 
-        //Guardar información en el item del listado (solo guardamos el nombre del libro)
+        //Guardar información en el item del listado
         final Votacion votacion=this.getItem(position);
         ImageView etiquetaImagen = item.findViewById(R.id.imagenU);
         Picasso.with(getContext()).load(getItem(position).getImagen()).into(etiquetaImagen);
@@ -41,7 +41,7 @@ public class VotacionAdaptador extends ArrayAdapter<Votacion>
         TextView etiquetaComentario = item.findViewById(R.id.comentarioU);
         etiquetaComentario.setText(getItem(position).getComentario());
 
-        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles del libro pasandole como parametro el identificador
+        //Ninguna acción al pulsar sobre el item
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -12,32 +12,32 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_friend"
         android:name="com.proyecto.discator.ui.amigos.FriendFragment"
         android:label="@string/menu_friend"
         tools:layout="@layout/fragment_friend" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_votaciones"
         android:name="com.proyecto.discator.ui.votaciones.VotacionesFragment"
         android:label="@string/menu_votaciones"
         tools:layout="@layout/fragment_votaciones" />
 
     <fragment
-        android:id="@+id/nav_tools"
+        android:id="@+id/nav_ranking"
         android:name="com.proyecto.discator.ui.albumesFiltro.AlbumesFiltroFragment"
-        android:label="@string/menu_tools"
+        android:label="@string/menu_ranking"
         tools:layout="@layout/fragment_albumes_filtro" />
 
     <fragment
-        android:id="@+id/nav_share"
+        android:id="@+id/nav_perfil"
         android:name="com.proyecto.discator.ui.perfil.PerfilFragment"
-        android:label="@string/menu_share"
+        android:label="@string/menu_perfil"
         tools:layout="@layout/fragment_perfil" />
 
     <fragment
-        android:id="@+id/nav_send"
-        android:name="com.proyecto.discator.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        android:id="@+id/nav_listas"
+        android:name="com.proyecto.discator.ui.listas.ListaFragment"
+        android:label="@string/menu_listas"
+        tools:layout="@layout/fragment_listas" />
 </navigation>

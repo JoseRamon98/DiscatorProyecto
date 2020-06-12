@@ -2,7 +2,6 @@ package com.proyecto.discator;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,7 +69,6 @@ public class AlbumActivity extends AppCompatActivity
             @Override
             public void onSuccess(DocumentSnapshot doc)
             {
-                Log.i("logprueba","Consulta por identificador:"+doc.get("Comentarios"));
                 //Obtener textos de la base de datos
                 genero=(String)doc.get("Genero");
                 año = (String)doc.get("Año");
@@ -102,7 +100,7 @@ public class AlbumActivity extends AppCompatActivity
                     comentarioAdaptador.notifyDataSetChanged();
                     notaMedia = notaMedia / comentarios.size();
                     TextView nota_media = findViewById(R.id.nota_media);
-                    nota_media.setText("" + notaMedia);
+                    nota_media.setText(String.format("%.2f",(notaMedia)));
                     ListView listaComentarios = findViewById(R.id.listadoComentarios);
                     listaComentarios.setAdapter(comentarioAdaptador);
                 }
@@ -133,12 +131,36 @@ public class AlbumActivity extends AppCompatActivity
                         {
                             if (comentarios!=null)
                             {
-                                Map<String, Object> mapa = new HashMap<>();
-                                mapa.put("comentario", comentario);
-                                mapa.put("correoUsuario", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                                mapa.put("valoracion", votacion);
-                                comentarios.add(mapa);
-                                coleccionAlbumes.document(nombre).update("Comentarios", comentarios); //Añadimos a los comentarios un nuevo comentario
+                                boolean encontrado=false;
+                                int pos=0;
+                                for (int i=0; i<comentarios.size(); i++)
+                                {
+                                    if (comentarios.get(i).get("correoUsuario").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                                    {
+                                        encontrado=true;
+                                        pos=i;
+                                    }
+                                }
+                                if (!encontrado)
+                                {
+                                    Map<String, Object> mapa = new HashMap<>();
+                                    mapa.put("comentario", comentario);
+                                    mapa.put("correoUsuario", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                    mapa.put("valoracion", votacion);
+                                    comentarios.add(mapa);
+                                    coleccionAlbumes.document(nombre).update("Comentarios", comentarios); //Añadimos a los comentarios un nuevo comentario
+                                    finish();
+                                }
+                                else
+                                {
+                                    Map<String, Object> mapa = new HashMap<>();
+                                    mapa.put("comentario", comentario);
+                                    mapa.put("correoUsuario", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                    mapa.put("valoracion", votacion);
+                                    comentarios.set(pos, mapa);
+                                    coleccionAlbumes.document(nombre).update("Comentarios", comentarios); //Añadimos a los comentarios un nuevo comentario
+                                    finish();
+                                }
                             }
                             else
                             {
@@ -148,6 +170,7 @@ public class AlbumActivity extends AppCompatActivity
                                 mapa.put("valoracion", votacion);
                                 comentariosEscritos.add(mapa);
                                 coleccionAlbumes.document(nombre).update("Comentarios", comentariosEscritos); //Creamos un nuevo campo para loc comentarios e introducimos uno
+                                finish();
                             }
                         }
                     }

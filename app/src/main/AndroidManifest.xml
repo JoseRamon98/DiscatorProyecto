@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AmigoActivity"></activity>
+        <activity android:name=".ListaActivity"></activity>
+        <activity android:name=".AmigoActivity" />
         <activity android:name=".AlbumActivity" />
         <activity
             android:name=".GrupoActivity"
@@ -21,10 +22,6 @@
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".PrincipalActivity"
-            android:label="@string/title_activity_principal"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">

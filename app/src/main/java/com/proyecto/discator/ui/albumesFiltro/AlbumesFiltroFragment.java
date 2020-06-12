@@ -106,12 +106,4 @@ public class AlbumesFiltroFragment extends Fragment
         });
         return root;
     }
-
-    public void getSortedAlbumByNota() throws Exception {
-        System.out.println("-----Sorted JobCandidate by age: Descending-----");
-        ArrayList<Album> albumes = albumSorter.getSortedByNota();
-        for (Album album : albumes) {
-            System.out.println(album);
-        }
-    }
 }

@@ -13,7 +13,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.proyecto.discator.Adaptadores.ListaAdaptador;
 import com.proyecto.discator.Adaptadores.VotacionAdaptador;
+import com.proyecto.discator.bean.Lista;
 import com.proyecto.discator.bean.Votacion;
 import com.squareup.picasso.Picasso;
 
@@ -26,6 +28,8 @@ public class AmigoActivity extends AppCompatActivity
 {
     private ArrayList<Votacion> arrayVotacion;
     private VotacionAdaptador votacionAdaptador;
+    private ArrayList<Lista> arrayLista;
+    private ListaAdaptador adaptadorListas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,7 +37,7 @@ public class AmigoActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amigo);
         FirebaseFirestore basedatos = FirebaseFirestore.getInstance();
-        CollectionReference coleccionArtistas = basedatos.collection("Artistas"); //nombre de la coleccion
+        CollectionReference coleccionArtistas = basedatos.collection("Artistas"); //nombre de la coleccion Artistas
         final String foto=getIntent().getStringExtra("Foto");
         ImageView fotoAmigo=findViewById(R.id.imagenAmigo);
         Picasso.with(this).load(foto).into(fotoAmigo);
@@ -84,13 +88,13 @@ public class AmigoActivity extends AppCompatActivity
                                             votacion1.setAño(añoDisco);
                                             arrayVotacion.add(votacion1);
                                             TextView textoNumeroDeVotos=findViewById(R.id.numeroDeVotosAmigo);
-                                            textoNumeroDeVotos.setText(String.valueOf(arrayVotacion.size()));
+                                            textoNumeroDeVotos.setText("Número de votos: "+arrayVotacion.size());
                                             for (Votacion votacion:arrayVotacion)
                                             {
                                                 notaMedia+=Float.parseFloat(votacion.getVotacion());
                                             }
                                             TextView textoNotaMediaVotos=findViewById(R.id.MediDeVotosAmigo);
-                                            textoNotaMediaVotos.setText(String.format("%.2f",(notaMedia/arrayVotacion.size())));
+                                            textoNotaMediaVotos.setText("Media de votos: "+String.format("%.2f",(notaMedia/arrayVotacion.size())));
                                         }
                                     }
                                     votacionAdaptador.notifyDataSetChanged();
@@ -101,6 +105,29 @@ public class AmigoActivity extends AppCompatActivity
                         }
                     });
                 }
+            }
+        });
+
+        arrayLista=new ArrayList<>();
+        adaptadorListas = new ListaAdaptador(AmigoActivity.this, arrayLista);
+        CollectionReference coleccionListas = basedatos.collection("Usuarios").document(correo).collection("Listas"); //nombre de la coleccion
+        coleccionListas.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    return;
+                }
+                //Recorrer los documentos de la base de datos y añadirlos al vector de listas
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots)
+                {
+                    Lista lista=new Lista();
+                    lista.setNombreLista(doc.getId());
+                    lista.setPropietario(correo);
+                    arrayLista.add(lista);
+                }
+                adaptadorListas.notifyDataSetChanged();
+                ListView vistaLista=findViewById(R.id.listadoListasAmigo);
+                vistaLista.setAdapter(adaptadorListas);
             }
         });
     }

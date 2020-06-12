@@ -62,8 +62,8 @@ public class Main2Activity extends AppCompatActivity
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                R.id.nav_home, R.id.nav_friend, R.id.nav_votaciones,
+                R.id.nav_ranking, R.id.nav_perfil, R.id.nav_listas)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -100,16 +100,14 @@ public class Main2Activity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.cerrarSesion:
-                AuthUI.getInstance()
-                        .signOut(Main2Activity.this)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Intent intencion = new Intent(Main2Activity.this, LoginActivity.class);
-                                intencion.putExtra("miParametro", "valorParametro"); //pasar un parametro a la siguiente actividad
-                                startActivity(intencion);
-                                finish();
-                            }
-                        });
+                 AuthUI.getInstance().signOut(Main2Activity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                     public void onComplete(@NonNull Task<Void> task) {
+                         Intent intencion = new Intent(Main2Activity.this, LoginActivity.class);
+                         intencion.putExtra("miParametro", "valorParametro"); //pasar un parametro a la siguiente actividad
+                         startActivity(intencion);
+                         finish();
+                     }
+                 });
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

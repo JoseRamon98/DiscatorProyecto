@@ -13,9 +13,9 @@
     <string name="menu_home">Home</string>
     <string name="menu_friend">Amigos</string>
     <string name="menu_votaciones">Comentarios</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="menu_ranking">Mejores Discos</string>
+    <string name="menu_perfil">Perfil</string>
+    <string name="menu_listas">Mis Listas</string>
     <string name="title_activity_grupo">GrupoActivity</string>
     <string name="tab_text_1">Informacion</string>
     <string name="tab_text_2">Albumes</string>

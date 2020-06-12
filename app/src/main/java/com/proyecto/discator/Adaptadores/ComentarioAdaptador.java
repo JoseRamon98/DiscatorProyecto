@@ -30,7 +30,7 @@ public class ComentarioAdaptador extends ArrayAdapter<Comentario>
         //Obtener el item del layout item_lista
         View item = LayoutInflater.from(getContext()).inflate(R.layout.item_lista_comentarios, null);
 
-        //Guardar información en el item del listado (solo guardamos el nombre del libro)
+        //Guardamos la información en el item del listado
         final Comentario comentario=this.getItem(position);
         TextView etiquetaUsuario = item.findViewById(R.id.usuario);
         etiquetaUsuario.setText(getItem(position).getIdUsuario());
@@ -39,7 +39,7 @@ public class ComentarioAdaptador extends ArrayAdapter<Comentario>
         TextView etiquetaComentario = item.findViewById(R.id.comentario);
         etiquetaComentario.setText(getItem(position).getComentario());
 
-        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles del libro pasandole como parametro el identificador
+        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles del comentario pasandole como parametro el identificador de usuario
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
