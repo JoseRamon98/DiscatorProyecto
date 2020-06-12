@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.proyecto.discator.Adaptadores.VotacionAdaptador;
 import com.proyecto.discator.R;
 import com.proyecto.discator.bean.Votacion;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -67,6 +70,7 @@ public class VotacionesFragment extends Fragment
                                 String imagenDisco=(String)doc.get("Imagen");
                                 String nombreAlbum=doc.getId();
                                 String añoDisco=(String)doc.get("Año");
+                                float notaMedia=0;
                                 if (doc.get("Comentarios")!=null)
                                 {
                                     votacionAdaptador = new VotacionAdaptador(getActivity(), arrayVotacion);
@@ -81,6 +85,14 @@ public class VotacionesFragment extends Fragment
                                             votacion1.setNombreAlbum(nombreAlbum);
                                             votacion1.setAño(añoDisco);
                                             arrayVotacion.add(votacion1);
+                                            TextView textoNumeroDeVotos=root.findViewById(R.id.numeroDeVotos);
+                                            textoNumeroDeVotos.setText(String.valueOf(arrayVotacion.size()));
+                                            for (Votacion votacion:arrayVotacion)
+                                            {
+                                                notaMedia+=Float.parseFloat(votacion.getVotacion());
+                                            }
+                                            TextView textoNotaMediaVotos=root.findViewById(R.id.notaMediaVotos);
+                                            textoNotaMediaVotos.setText(String.format("%.2f",(notaMedia/arrayVotacion.size())));
                                         }
                                     }
                                     votacionAdaptador.notifyDataSetChanged();
@@ -93,6 +105,10 @@ public class VotacionesFragment extends Fragment
                 }
             }
         });
+        TextView textoCorreo=root.findViewById(R.id.correo);
+        textoCorreo.setText(correo);
+        ImageView fotoCorreo=root.findViewById(R.id.fotoCorreo);
+        Picasso.with(getContext()).load(user.getPhotoUrl()).into(fotoCorreo);
         return root;
     }
 }

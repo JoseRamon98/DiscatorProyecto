@@ -17,7 +17,7 @@
         <Button android:id="@+id/botonCrearLista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Crear Lista"/>
+            android:text="Crear Lista/Limpiar lista sí está creada"/>
 
         <Button android:id="@+id/botonBorrarLista"
             android:layout_width="match_parent"

@@ -67,6 +67,7 @@ public class ListaFragment extends Fragment
                         if (textoLista.length()!=0)
                         {
                             Map<String, Object> nuevaLista = new HashMap<>();
+                            nuevaLista.put("Tipo", "publica");
                             coleccionListas.document(textoLista).set(nuevaLista).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) { //libro guardado correctamente, voy al listado

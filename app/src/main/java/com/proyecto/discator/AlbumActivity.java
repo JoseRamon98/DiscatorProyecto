@@ -20,7 +20,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.proyecto.discator.Adaptadores.ComentarioAdaptador;
 import com.proyecto.discator.bean.Comentario;
-import com.proyecto.discator.ui.albumesFiltro.AlbumesFiltroFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -181,7 +180,8 @@ public class AlbumActivity extends AppCompatActivity
                     @Override
                     public void onClick(View view)
                     {
-                        Intent intencion = new Intent(view.getContext(), AlbumesFiltroFragment.class);
+                        Intent intencion = new Intent(view.getContext(), GenerosActivity.class);
+                        intencion.putExtra("Genero", genero);
                         startActivity(intencion);
                     }
                 });

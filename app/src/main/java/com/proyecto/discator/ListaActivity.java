@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,56 +59,7 @@ public class ListaActivity extends AppCompatActivity {
         documento = coleccionListas.document(nombreLista);
         documento.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot doc)
-            {
-//                albumes = (ArrayList<String>) doc.get("Album");
-//                if (albumes != null)
-//                {
-//                    for (int i = 0; i < albumes.size(); i++)
-//                    {
-//                        Log.i("NombreAlbum", albumes.get(i));
-//                        nombreAlbum = albumes.get(i);
-//                        Log.i("NombreAlbum", nombreAlbum);
-//                        coleccionArtistas = basedatos.collection("Artistas"); //nombre de la coleccion
-//                        coleccionArtistas.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                            @Override
-//                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e)
-//                            {
-//                                if (e != null) {
-//                                    return;
-//                                }
-//                                arrayAlbumes = new ArrayList<>();
-//                                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-//                                    adaptadorAlbumes = new AlbumAdaptador(ListaActivity.this, arrayAlbumes);
-//                                    final  QueryDocumentSnapshot document1 = document;
-//                                    CollectionReference coleccionAlbumes = coleccionArtistas.document(document.getId()).collection("Albumes");
-//                                    DocumentReference docIdRef = coleccionAlbumes.document(nombreAlbum);
-//                                    docIdRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                                        @Override
-//                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                                            adaptadorAlbumes = new AlbumAdaptador(ListaActivity.this, arrayAlbumes);
-//                                            if (task.isSuccessful()) {
-//                                                DocumentSnapshot document = task.getResult();
-//                                                if (document.exists()) {
-//                                                    Album album = new Album();
-//                                                    album.setNombreAlbum(document.getId());
-//                                                    album.setGenero((String) document.get("Genero"));
-//                                                    album.setAño((String) document.get("Año"));
-//                                                    album.setImagen((String) document.get("Imagen"));
-//                                                    album.setNombre(document1.getId());
-//                                                    arrayAlbumes.add(album);
-//                                                }
-//                                            }
-//                                            adaptadorAlbumes.notifyDataSetChanged();
-//                                            ListView listadoAlbumes = findViewById(R.id.listaAlbumes);
-//                                            listadoAlbumes.setAdapter(adaptadorAlbumes);
-//                                        }
-//                                    });
-//                                }
-//                            }
-//                        });
-//                    }
-//                }
+            public void onSuccess(final DocumentSnapshot doc) {
 
                 albumes = (ArrayList<String>) doc.get("Album");
                 coleccionArtistas = basedatos.collection("Artistas"); //nombre de la coleccion
@@ -118,46 +70,51 @@ public class ListaActivity extends AppCompatActivity {
                             return;
                         }
                         arrayAlbumes = new ArrayList<>();
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots)
-                        {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             adaptadorAlbumes = new AlbumAdaptador(ListaActivity.this, arrayAlbumes);
-                            final  QueryDocumentSnapshot document1 = document;
+                            final QueryDocumentSnapshot document1 = document;
                             CollectionReference coleccionAlbumes = coleccionArtistas.document(document.getId()).collection("Albumes");
-                            for (int i=0; i<albumes.size(); i++)
-                            {
-                                DocumentReference docIdRef = coleccionAlbumes.document(albumes.get(i));
-                                docIdRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        adaptadorAlbumes = new AlbumAdaptador(ListaActivity.this, arrayAlbumes);
-                                        if (task.isSuccessful()) {
-                                            DocumentSnapshot document = task.getResult();
-                                            if (document.exists())
-                                            {
-                                                Album album = new Album();
-                                                album.setNombreAlbum(document.getId());
-                                                album.setGenero((String) document.get("Genero"));
-                                                album.setAño((String) document.get("Año"));
-                                                album.setImagen((String) document.get("Imagen"));
-                                                album.setNombre(document1.getId());
-                                                arrayAlbumes.add(album);
-                                                adaptadorAlbumes.notifyDataSetChanged();
-                                                ListView listadoAlbumes = findViewById(R.id.listaAlbumes);
-                                                listadoAlbumes.setAdapter(adaptadorAlbumes);
+                            if (albumes != null) {
+                                for (int i = 0; i < albumes.size(); i++) {
+                                    DocumentReference docIdRef = coleccionAlbumes.document(albumes.get(i));
+                                    docIdRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            adaptadorAlbumes = new AlbumAdaptador(ListaActivity.this, arrayAlbumes);
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
+                                                    Album album = new Album();
+                                                    album.setNombreAlbum(document.getId());
+                                                    album.setGenero((String) document.get("Genero"));
+                                                    album.setAño((String) document.get("Año"));
+                                                    album.setImagen((String) document.get("Imagen"));
+                                                    album.setNombre(document1.getId());
+                                                    arrayAlbumes.add(album);
+                                                    adaptadorAlbumes.notifyDataSetChanged();
+                                                    ListView listadoAlbumes = findViewById(R.id.listaAlbumes);
+                                                    listadoAlbumes.setAdapter(adaptadorAlbumes);
+                                                }
                                             }
+                                            else
+                                                textoAlbumView.setError("El album no existe");
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             }
                         }
                     }
                 });
 
+                Button botonPrivacidad=findViewById(R.id.botonPrivacidad);
                 Button botonAñadirALista = findViewById(R.id.botonAñadirALista);
                 textoAlbumView = findViewById(R.id.textoAlbum);
+                final Switch switchPrivada = findViewById(R.id.switch1);
                 if (!usuario.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
                     botonAñadirALista.setVisibility(View.GONE);
                     textoAlbumView.setVisibility(View.GONE);
+                    switchPrivada.setVisibility(View.GONE);
+                    botonPrivacidad.setVisibility(View.GONE);
                 }
                 botonAñadirALista.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -238,6 +195,22 @@ public class ListaActivity extends AppCompatActivity {
                             });
                         } else
                             textoAlbumView.setError("La lista no puede estar vacia");
+                    }
+                });
+                String tipo = (String) doc.get("Tipo");
+                if (tipo.equals("publica"))
+                    switchPrivada.setChecked(true);
+                else
+                    switchPrivada.setChecked(false);
+
+                botonPrivacidad.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (switchPrivada.isChecked())
+                            documento.update("Tipo", "publica");
+                        else
+                            documento.update("Tipo", "privada");
+                        finish();
                     }
                 });
             }
