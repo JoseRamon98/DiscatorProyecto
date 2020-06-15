@@ -30,7 +30,7 @@ public class VotacionAdaptador extends ArrayAdapter<Votacion>
         //Obtener el item del layout item_lista
         View item = LayoutInflater.from(getContext()).inflate(R.layout.item_lista_votaciones, null);
 
-        //Guardar información en el item del listado
+        //Guardar información en el item del listado guardando la imagen, nombre, valoracion y comentario del album hechos por el usuario
         final Votacion votacion=this.getItem(position);
         ImageView etiquetaImagen = item.findViewById(R.id.imagenU);
         Picasso.with(getContext()).load(getItem(position).getImagen()).into(etiquetaImagen);
@@ -45,9 +45,6 @@ public class VotacionAdaptador extends ArrayAdapter<Votacion>
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intencion = new Intent(contextPadre, VotacionActivity.class);
-//                intencion.putExtra("Nombre", votacion.getIdUsuario());
-//                contextPadre.startActivity(intencion);
             }
         });
         return item;

@@ -22,6 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.proyecto.discator.Adaptadores.VotacionAdaptador;
 import com.proyecto.discator.R;
 import com.proyecto.discator.bean.Votacion;
+import com.proyecto.discator.sorters.VotacionSorter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class VotacionesFragment extends Fragment
     private ArrayList<Votacion> arrayVotacion;
     private VotacionAdaptador votacionAdaptador;
 
+    private VotacionSorter votacionSorter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -84,15 +86,19 @@ public class VotacionesFragment extends Fragment
                                             votacion1.setImagen(imagenDisco);
                                             votacion1.setNombreAlbum(nombreAlbum);
                                             votacion1.setAño(añoDisco);
+                                            float notaValoracion=Float.parseFloat(votacion1.getVotacion());
+                                            votacion1.setNotaValoracion(notaValoracion);
                                             arrayVotacion.add(votacion1);
+                                            votacionSorter=new VotacionSorter(arrayVotacion);
+                                            votacionSorter.getSortedByVotacion(); //Se ordenan los albumes por nota
                                             TextView textoNumeroDeVotos=root.findViewById(R.id.numeroDeVotos);
-                                            textoNumeroDeVotos.setText(String.valueOf(arrayVotacion.size()));
+                                            textoNumeroDeVotos.setText("Número de votos: "+arrayVotacion.size());
                                             for (Votacion votacion:arrayVotacion)
                                             {
                                                 notaMedia+=Float.parseFloat(votacion.getVotacion());
                                             }
                                             TextView textoNotaMediaVotos=root.findViewById(R.id.notaMediaVotos);
-                                            textoNotaMediaVotos.setText(String.format("%.2f",(notaMedia/arrayVotacion.size())));
+                                            textoNotaMediaVotos.setText("Media de votos: "+String.format("%.2f",(notaMedia/arrayVotacion.size())));
                                         }
                                     }
                                     votacionAdaptador.notifyDataSetChanged();

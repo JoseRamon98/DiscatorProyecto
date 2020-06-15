@@ -12,21 +12,11 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_friend">Amigos</string>
-    <string name="menu_votaciones">Comentarios</string>
-    <string name="menu_ranking">Mejores Discos</string>
     <string name="menu_perfil">Perfil</string>
+    <string name="menu_ranking">Mejores Discos</string>
+    <string name="menu_listas_globales">Todas las listas</string>
     <string name="menu_listas">Mis Listas</string>
     <string name="title_activity_grupo">GrupoActivity</string>
     <string name="tab_text_1">Informacion</string>
     <string name="tab_text_2">Albumes</string>
-    <string-array name="spinner">
-        <item>Rock</item>
-        <item>Rock Progresivo</item>
-        <item>Heavy Metal</item>
-        <item>Metal Progresivo</item>
-        <item>Thrash Metal</item>
-        <item>Death Metal</item>
-        <item>Black Metal</item>
-        <item>Grunge</item>
-    </string-array>
 </resources>

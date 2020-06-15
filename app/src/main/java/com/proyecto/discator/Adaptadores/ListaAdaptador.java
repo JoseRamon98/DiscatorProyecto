@@ -28,14 +28,14 @@ public class ListaAdaptador extends ArrayAdapter<Lista>
         //Obtener el item del layout item_lista
         View item = LayoutInflater.from(getContext()).inflate(R.layout.item_lista_lista, null);
 
-        //Guardar información en el item del listado (solo guardamos el nombre del libro)
+        //Guardar información en el item del listado guardando el nombre y posicion de la lista
         final Lista lista=this.getItem(position);
         TextView etiquetaNombre = item.findViewById(R.id.nombreLista);
         etiquetaNombre.setText(getItem(position).getNombreLista());
         TextView etiquetaPosicion = item.findViewById(R.id.posicionLista);
         etiquetaPosicion.setText(String.valueOf(position+1));
 
-        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles del libro pasandole como parametro el identificador
+        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles de la lista pasandole como parametro el nombre y propietario de la lista
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

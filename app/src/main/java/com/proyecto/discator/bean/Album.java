@@ -61,6 +61,7 @@ public class Album extends Artista
         this.notaMedia = notaMedia;
     }
 
+    //Comparador de las notas de los albumes para su posterior ordenación
     public static Comparator<Album> notaComparator = new Comparator<Album>() {
         @Override
         public int compare(Album album1, Album album2) {
@@ -69,6 +70,7 @@ public class Album extends Artista
         }
     };
 
+    //Comparador de los años en los que se públicaron los albumes para su posterior ordenación
     public static Comparator<Album> añoComparator = new Comparator<Album>() {
         @Override
         public int compare(Album album1, Album album2) {

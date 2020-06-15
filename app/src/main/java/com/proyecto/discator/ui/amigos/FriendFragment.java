@@ -42,6 +42,7 @@ public class FriendFragment extends Fragment
 
     private EditText textoBuscarCorreo;
     private String correoAmigo;
+    private String correo;
     private boolean encontrado;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -50,7 +51,7 @@ public class FriendFragment extends Fragment
         basedatos = FirebaseFirestore.getInstance();
         coleccionUsuarios = basedatos.collection("Usuarios"); //nombre de la coleccion
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final String correo = user.getEmail();
+        correo = user.getEmail(); //Se recoge el correo del usuario
         documento=coleccionUsuarios.document(correo);
         documento.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
         {

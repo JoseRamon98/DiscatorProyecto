@@ -12,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ListaAmigoActivity"></activity>
+        <activity android:name=".YearActivity" />
         <activity android:name=".GenerosActivity" />
         <activity android:name=".ListaActivity" />
         <activity android:name=".AmigoActivity" />

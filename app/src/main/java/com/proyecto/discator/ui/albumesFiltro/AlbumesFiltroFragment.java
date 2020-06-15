@@ -39,7 +39,7 @@ public class AlbumesFiltroFragment extends Fragment
         final View root = inflater.inflate(R.layout.fragment_albumes_filtro, container, false);
         FirebaseFirestore basedatos = FirebaseFirestore.getInstance();
         CollectionReference coleccionArtistas = basedatos.collection("Artistas"); //nombre de la coleccion
-
+        //Se recorre la colección de artistas
         coleccionArtistas.addSnapshotListener(new EventListener<QuerySnapshot>(){
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e)
@@ -52,7 +52,7 @@ public class AlbumesFiltroFragment extends Fragment
                     final QueryDocumentSnapshot document1=document;
                     FirebaseFirestore bd = FirebaseFirestore.getInstance();
                     CollectionReference coleccionAlbumes = bd.collection("Artistas").document(document.getId()).collection("Albumes");
-                    arrayAlbumes=new ArrayList<>();
+                    arrayAlbumes=new ArrayList<>();//Array vacio con los albumes de la colección
                     adaptadorAlbumes = new AlbumAdaptador(getContext(), arrayAlbumes);
                     coleccionAlbumes.addSnapshotListener(new EventListener<QuerySnapshot>()
                     {
@@ -70,27 +70,27 @@ public class AlbumesFiltroFragment extends Fragment
                                 album.setGenero((String) doc.get("Genero")); //obtener genero del album
                                 album.setImagen((String) doc.get("Imagen")); //obtener la imagen del album
                                 album.setNombre(document1.getId());
-                                final ArrayList<Map> comentarios=(ArrayList<Map>)doc.get("Comentarios");
+                                final ArrayList<Map> comentarios=(ArrayList<Map>)doc.get("Comentarios"); //obtener los comentarios del album
                                 if (doc.get("Comentarios")!=null)
                                 {
                                     float notaMedia = 0;
-                                    arrayComentario = new ArrayList<>();
+                                    arrayComentario = new ArrayList<>(); //Array de comentarios
                                     for (int i = 0; i < comentarios.size(); i++)
                                     {
-                                        notaMedia += Float.parseFloat((String) comentarios.get(i).get("valoracion"));
+                                        notaMedia += Float.parseFloat((String) comentarios.get(i).get("valoracion")); //Se almacena la nota que le ha otorgado cada usuario
                                         Comentario comentario1 = new Comentario();
-                                        comentario1.setComentario((String) comentarios.get(i).get("comentario"));
-                                        comentario1.setIdUsuario((String) comentarios.get(i).get("correoUsuario"));
-                                        comentario1.setValoracion((String) comentarios.get(i).get("valoracion"));
-                                        arrayComentario.add(comentario1);
+                                        comentario1.setComentario((String) comentarios.get(i).get("comentario")); //obtener el comentario
+                                        comentario1.setIdUsuario((String) comentarios.get(i).get("correoUsuario")); //obtener correo del usuario que ha comentado
+                                        comentario1.setValoracion((String) comentarios.get(i).get("valoracion")); //obtener la valoración dque el usuaro le ha otorgado al album
+                                        arrayComentario.add(comentario1); //Se añaden al Array la inforación
                                     }
-                                    notaMedia = notaMedia / comentarios.size();
+                                    notaMedia = notaMedia / comentarios.size(); //calculo de la nota media
                                     album.setNotaMedia(notaMedia);
                                     Log.i("NotaMedia",""+album.getNotaMedia());
                                 }
                                 arrayAlbumes.add(album);
                                 albumSorter=new AlbumSorter(arrayAlbumes);
-                                albumSorter.getSortedByNota();
+                                albumSorter.getSortedByNota(); //Se ordenan los albumes por nota
                             }
                             adaptadorAlbumes.notifyDataSetChanged();
                             //Añadir el adatador al ListView

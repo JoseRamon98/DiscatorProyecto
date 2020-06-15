@@ -37,6 +37,8 @@ public class AlbumActivity extends AppCompatActivity
     private ComentarioAdaptador comentarioAdaptador;
 
     private EditText textoComentario;
+    RatingBar votacionBar;
+    ArrayList<Map> comentariosEscritos;
 
     private String nombreArtista="";
     private String nombre="";
@@ -75,9 +77,7 @@ public class AlbumActivity extends AppCompatActivity
                 final ArrayList<Map> comentarios=(ArrayList<Map>)doc.get("Comentarios");
                 //Guardar textos en las cajas de texto
                 TextView nombreView = findViewById(R.id.nombreAlbum);
-                nombreView.setText(nombre);
-                TextView añoView = findViewById(R.id.añoAlbum);
-                añoView.setText(año);
+                nombreView.setText(nombre+" ("+año+")");
                 TextView generoView = findViewById(R.id.generoAlbum);
                 generoView.setText(genero);
                 ImageView imagen=findViewById(R.id.imagenAlbum);
@@ -105,13 +105,11 @@ public class AlbumActivity extends AppCompatActivity
                 }
                 else {
                     TextView nota_media = findViewById(R.id.nota_media);
-                    nota_media.setText("null");
+                    nota_media.setText("-");
                 }
 
                 //
-                final ArrayList<Map> comentariosEscritos=new ArrayList<>();
-
-                final RatingBar votacionBar=findViewById(R.id.ratingBar);
+                comentariosEscritos=new ArrayList<>();
 
                 //Acciones del boton que guarda las modificaciones
                 Button objetoBotonEnviar = findViewById(R.id.enviarComentario);
@@ -119,12 +117,13 @@ public class AlbumActivity extends AppCompatActivity
                     @Override
                     public void onClick(View view)
                     {
+                        votacionBar=findViewById(R.id.ratingBar);
                         votacion=String.valueOf(votacionBar.getRating()*2);
                         textoComentario=findViewById(R.id.textoComentario);
                         comentario=textoComentario.getText().toString();
                         if (comentario.length() > 600)
                             textoComentario.setError("Error, no puede haber mas de 600 caracteres");
-                        else if(votacion.equals("0"))
+                        else if(votacionBar.getRating()==0)
                             textoComentario.setError("Error, falta la votación");
                         else
                         {
@@ -142,7 +141,7 @@ public class AlbumActivity extends AppCompatActivity
                                 }
                                 if (!encontrado)
                                 {
-                                    Map<String, Object> mapa = new HashMap<>();
+                                    Map<String, Object> mapa = new HashMap<>(); //Creamos un mapa con los comentarios del disco para añadirlos
                                     mapa.put("comentario", comentario);
                                     mapa.put("correoUsuario", FirebaseAuth.getInstance().getCurrentUser().getEmail());
                                     mapa.put("valoracion", votacion);
@@ -152,11 +151,11 @@ public class AlbumActivity extends AppCompatActivity
                                 }
                                 else
                                 {
-                                    Map<String, Object> mapa = new HashMap<>();
+                                    Map<String, Object> mapa = new HashMap<>(); //Creamos un mapa con los comentarios del disco para añadirlos
                                     mapa.put("comentario", comentario);
                                     mapa.put("correoUsuario", FirebaseAuth.getInstance().getCurrentUser().getEmail());
                                     mapa.put("valoracion", votacion);
-                                    comentarios.set(pos, mapa);
+                                    comentarios.set(pos, mapa); //Si ya ha hecho un comentario ylo vuelve a hacer, este se cambiará por el anterior
                                     coleccionAlbumes.document(nombre).update("Comentarios", comentarios); //Añadimos a los comentarios un nuevo comentario
                                     finish();
                                 }
@@ -179,9 +178,20 @@ public class AlbumActivity extends AppCompatActivity
 
                     @Override
                     public void onClick(View view)
-                    {
+                    { //Al pulsar sobre el género, se filtran los albumes por este
                         Intent intencion = new Intent(view.getContext(), GenerosActivity.class);
                         intencion.putExtra("Genero", genero);
+                        startActivity(intencion);
+                    }
+                });
+
+                nombreView.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view)
+                    { //Al pulsar sobre el año, se filtran los albumes por este
+                        Intent intencion = new Intent(view.getContext(), YearActivity.class);
+                        intencion.putExtra("Año", año);
                         startActivity(intencion);
                     }
                 });

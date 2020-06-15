@@ -31,7 +31,7 @@ public class AlbumAdaptador extends ArrayAdapter<Album>
         //Obtener el item del layout item_lista
         View item = LayoutInflater.from(getContext()).inflate(R.layout.item_lista_albumes, null);
 
-        //Guardar información en el item del listado (solo guardamos el nombre del libro)
+        //Guardar información en el item del listado, guardando la imagen, el nombrey la nota del album
         final Album album=this.getItem(position);
         ImageView etiquetaImagen=item.findViewById((R.id.imagenAlbum));
         Picasso.with(getContext()).load(album.getImagen()).into(etiquetaImagen);
@@ -41,7 +41,7 @@ public class AlbumAdaptador extends ArrayAdapter<Album>
         if (album.getNotaMedia()!=0)
             etiquetaNota.setText(String.valueOf(album.getNotaMedia()));
 
-        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles del libro pasandole como parametro el identificador
+        //Accin al pulsar sobre el item, va a la pantalla que muestra detalles del álbum pasandole como parametro el nombre del album y del artista
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

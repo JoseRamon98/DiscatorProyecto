@@ -4,21 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-    android:background="@mipmap/ic_launcher_foreground">
+    tools:context=".YearActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        android:layout_height="match_parent">
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/botonlogin"
+        <ListView android:id="@+id/listaAlbumesFiltradosAño"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-
+            app:layout_constraintTop_toTopOf="parent"/>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,24 +13,24 @@
             android:icon="@android:drawable/btn_star"
             android:title="@string/menu_friend" />
         <item
-            android:id="@+id/nav_votaciones"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_votaciones" />
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/fui_ic_anonymous_white_24dp"
+            android:title="@string/menu_perfil" />
         <item
             android:id="@+id/nav_ranking"
             android:icon="@android:drawable/ic_menu_sort_by_size"
             android:title="@string/menu_ranking" />
     </group>
 
-    <item android:title="Perfil">
+    <item android:title="Listas">
         <menu>
             <item
-                android:id="@+id/nav_perfil"
-                android:icon="@drawable/fui_ic_anonymous_white_24dp"
-                android:title="@string/menu_perfil" />
+                android:id="@+id/nav_listas_globales"
+                android:icon="@android:drawable/ic_menu_mapmode"
+                android:title="@string/menu_listas_globales" />
             <item
                 android:id="@+id/nav_listas"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_menu_slideshow"
                 android:title="@string/menu_listas" />
         </menu>
     </item>

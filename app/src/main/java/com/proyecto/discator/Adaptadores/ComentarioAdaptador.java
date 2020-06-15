@@ -41,6 +41,8 @@ public class ComentarioAdaptador extends ArrayAdapter<Comentario>
         final Comentario comentario=this.getItem(position);
         TextView etiquetaUsuario = item.findViewById(R.id.usuario);
         etiquetaUsuario.setText(getItem(position).getIdUsuario());
+
+        //Si el comentario es del usuario que está utilizando la aplicación, el comentario aparecerá en un tono gris
         if (getItem(position).getIdUsuario().equals(correo))
         {
             LinearLayout linearLayout=item.findViewById(R.id.layoutComentario);

@@ -1,4 +1,4 @@
-package com.proyecto.discator.ui.perfil;
+package com.proyecto.discator.ui.listasGlobales;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,18 +18,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.proyecto.discator.Adaptadores.ListaRankAdaptador;
 import com.proyecto.discator.R;
 import com.proyecto.discator.bean.Lista;
+import com.proyecto.discator.sorters.ListaSorter;
 
 import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-public class PerfilFragment extends Fragment
+public class ListasGlobalesFragment extends Fragment
 {
     private CollectionReference coleccionUsuarios;
     private FirebaseFirestore basedatos;
 
     private ArrayList<Lista> arrayLista;
     private ListaRankAdaptador adaptadorListasR;
+    private ListaSorter listaSorter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -43,8 +45,9 @@ public class PerfilFragment extends Fragment
                 if (e != null) {
                     return;
                 }
+                arrayLista = new ArrayList<>();
                 for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                    arrayLista = new ArrayList<>();
+                    adaptadorListasR = new ListaRankAdaptador(getActivity(), arrayLista);
                     final QueryDocumentSnapshot document1=document;
                     CollectionReference coleccionListas= coleccionUsuarios.document(document.getId()).collection("Listas");
                     coleccionListas.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -53,20 +56,32 @@ public class PerfilFragment extends Fragment
                             if (e != null) {
                                 return;
                             }
-                            adaptadorListasR = new ListaRankAdaptador(getContext(), arrayLista);
                             for (QueryDocumentSnapshot doc : queryDocumentSnapshots)
                             {
                                 String privacidad=(String)doc.get("Tipo");
-                                if (privacidad.equals("publica")) {
+                                ArrayList<String> likes=(ArrayList<String>)doc.get("Voto");
+                                if (privacidad.equals("publica"))
+                                {
+                                    int numeroDeLikes=0;
                                     Lista lista = new Lista();
                                     lista.setNombreLista(doc.getId());
                                     lista.setPropietario(document1.getId());
+                                    if (likes!=null)
+                                    {
+                                        for (int i=0; i<likes.size(); i++)
+                                        {
+                                            numeroDeLikes++;
+                                        }
+                                    }
+                                    lista.setLikes(numeroDeLikes);
                                     arrayLista.add(lista);
-                                    adaptadorListasR.notifyDataSetChanged();
-                                    ListView listaListasR = root.findViewById(R.id.listaMejoresListas);
-                                    listaListasR.setAdapter(adaptadorListasR);
+                                    listaSorter=new ListaSorter(arrayLista);
+                                    listaSorter.getSortedByLikes();
                                 }
                             }
+                            adaptadorListasR.notifyDataSetChanged();
+                            ListView listaListasR = root.findViewById(R.id.listaMejoresListas);
+                            listaListasR.setAdapter(adaptadorListasR);
                         }
                     });
                 }

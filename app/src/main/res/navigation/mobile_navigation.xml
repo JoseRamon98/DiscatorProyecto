@@ -18,9 +18,9 @@
         tools:layout="@layout/fragment_friend" />
 
     <fragment
-        android:id="@+id/nav_votaciones"
+        android:id="@+id/nav_perfil"
         android:name="com.proyecto.discator.ui.votaciones.VotacionesFragment"
-        android:label="@string/menu_votaciones"
+        android:label="@string/menu_perfil"
         tools:layout="@layout/fragment_votaciones" />
 
     <fragment
@@ -30,9 +30,9 @@
         tools:layout="@layout/fragment_albumes_filtro" />
 
     <fragment
-        android:id="@+id/nav_perfil"
-        android:name="com.proyecto.discator.ui.perfil.PerfilFragment"
-        android:label="@string/menu_perfil"
+        android:id="@+id/nav_listas_globales"
+        android:name="com.proyecto.discator.ui.listasGlobales.ListasGlobalesFragment"
+        android:label="@string/menu_listas_globales"
         tools:layout="@layout/fragment_perfil" />
 
     <fragment

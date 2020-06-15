@@ -56,7 +56,6 @@ public class ListaFragment extends Fragment
                     return;
                 }
                 arrayLista=new ArrayList<>();
-                adaptadorListas = new ListaAdaptador(getContext(), arrayLista);
                 Button botonCrearLista=root.findViewById(R.id.botonCrearLista);
                 botonCrearLista.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -67,7 +66,9 @@ public class ListaFragment extends Fragment
                         if (textoLista.length()!=0)
                         {
                             Map<String, Object> nuevaLista = new HashMap<>();
+                            ArrayList<String> voto=new ArrayList<>();
                             nuevaLista.put("Tipo", "publica");
+                            nuevaLista.put("Voto", voto);
                             coleccionListas.document(textoLista).set(nuevaLista).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) { //libro guardado correctamente, voy al listado
@@ -118,14 +119,15 @@ public class ListaFragment extends Fragment
                 //Recorrer los documentos de la base de datos y añadirlos al vector de listas
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots)
                 {
+                    adaptadorListas = new ListaAdaptador(getActivity(), arrayLista);
                     Lista lista=new Lista();
                     lista.setNombreLista(doc.getId());
                     lista.setPropietario(usuario);
                     arrayLista.add(lista);
+                    adaptadorListas.notifyDataSetChanged();
+                    ListView vistaLista=root.findViewById(R.id.listadoListas);
+                    vistaLista.setAdapter(adaptadorListas);
                 }
-                adaptadorListas.notifyDataSetChanged();
-                ListView vistaLista=root.findViewById(R.id.listadoListas);
-                vistaLista.setAdapter(adaptadorListas);
             }
         });
         return root;

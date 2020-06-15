@@ -4,37 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListaActivity">
+    tools:context=".ListaAmigoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText android:id="@+id/textoAlbum"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Introduce el nombre del album"/>
-
-        <Button android:id="@+id/botonAñadirALista"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Añadir disco a la lista" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <Button android:id="@+id/botonPrivacidad"
+            <Button android:id="@+id/botonLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+            android:text="+1"/>
+            <TextView android:id="@+id/correoCreadorLista"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
-            <Switch
-            android:id="@+id/switch1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Lista publica" />
-
         </LinearLayout>
 
         <ListView
@@ -44,4 +32,5 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="114dp" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

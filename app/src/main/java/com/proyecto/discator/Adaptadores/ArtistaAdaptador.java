@@ -28,12 +28,12 @@ public class ArtistaAdaptador extends ArrayAdapter<Artista>
         //Obtener el item del layout item_lista
         View item = LayoutInflater.from(getContext()).inflate(R.layout.item_lista, null);
 
-        //Guardar información en el item del listado (solo guardamos el nombre del libro)
+        //Guardar información en el item del listado (solo guardamos el nombre del artista)
         final Artista artista=this.getItem(position);
         TextView etiquetaNombre = item.findViewById(R.id.nombre);
         etiquetaNombre.setText(getItem(position).getNombre());
 
-        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles del libro pasandole como parametro el identificador
+        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles del artista pasandole como parametro el nombre
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

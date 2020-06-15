@@ -32,14 +32,14 @@ public class AmigoAdaptador extends ArrayAdapter<Amigo>
         //Obtener el item del layout item_lista
         View item = LayoutInflater.from(getContext()).inflate(R.layout.item_lista_amigos, null);
 
-        //Guardar información en el item del listado (solo guardamos el nombre del libro)
+        //Guardar información en el item del listado guardando la foto y el correo del usuario al que se hace referencia
         final Amigo amigo=this.getItem(position);
         ImageView fotoAmigo=item.findViewById(R.id.fotoAmigo);
         Picasso.with(contextPadre).load(getItem(position).getFoto()).into(fotoAmigo);
         TextView etiquetaCorreo = item.findViewById(R.id.correoAmigo);
         etiquetaCorreo.setText(getItem(position).getCorreo());
 
-        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles del libro pasandole como parametro el identificador
+        //Acción al pulsar sobre el item, va a la pantalla que muestra detalles del usuario pasandole como parametro el correo y la foto
         item.setOnClickListener(new View.OnClickListener()
         {
             @Override

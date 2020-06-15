@@ -6,10 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.proyecto.discator.ListaActivity;
+import com.proyecto.discator.ListaAmigoActivity;
 import com.proyecto.discator.R;
 import com.proyecto.discator.bean.Lista;
 
@@ -29,37 +28,25 @@ public class ListaRankAdaptador extends ArrayAdapter<Lista>
         //Obtener el item del layout item_lista
         View item = LayoutInflater.from(getContext()).inflate(R.layout.item_lista_rank, null);
 
-        //Guardar información en el item del listado (solo guardamos el nombre del libro)
+        //Guardar información en el item del listado guardando el nombre propietario y posición, así como el número de votos de la lista
         final Lista lista=this.getItem(position);
         TextView etiquetaNombre = item.findViewById(R.id.nombreListaRank);
-        etiquetaNombre.setText(getItem(position).getNombreLista());
+        etiquetaNombre.setText(getItem(position).getNombreLista()+" ("+getItem(position).getLikes()+")");
         TextView etiquetaUsuario = item.findViewById(R.id.nombrePropiertario);
         etiquetaUsuario.setText(getItem(position).getPropietario());
         TextView etiquetaPosicion = item.findViewById(R.id.posicion);
         etiquetaPosicion.setText(String.valueOf(position+1));
-        Button botonVotar=item.findViewById(R.id.botonLike);
 
-        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles del libro pasandole como parametro el identificador
+        //Accion al pulsar sobre el item, va a la pantalla que muestra detalles de la lista pasandole como parametro el nombre y propietario de la lista
         etiquetaNombre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intencion = new Intent(contextPadre, ListaActivity.class);
+                Intent intencion = new Intent(contextPadre, ListaAmigoActivity.class);
                 intencion.putExtra("Nombre", lista.getNombreLista());
                 intencion.putExtra("Correo", lista.getPropietario());
                 contextPadre.startActivity(intencion);
             }
         });
-
-        botonVotar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intencion = new Intent(contextPadre, ListaActivity.class);
-                intencion.putExtra("Nombre", lista.getNombreLista());
-                intencion.putExtra("Correo", lista.getPropietario());
-                contextPadre.startActivity(intencion);
-            }
-        });
-
         return item;
     }
 }

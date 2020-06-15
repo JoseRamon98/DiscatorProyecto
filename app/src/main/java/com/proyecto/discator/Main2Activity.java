@@ -23,8 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -35,26 +35,38 @@ import java.util.Objects;
 public class Main2Activity extends AppCompatActivity
 {
     private FirebaseFirestore basedatos;
-    private CollectionReference coleccionUsuarios;
     private DocumentReference documento;
 
     private AppBarConfiguration mAppBarConfiguration;
+
+    private FirebaseUser user;
+    private String correo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String correo = user.getEmail();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        correo = user.getEmail(); //Correo del usuario
         basedatos = FirebaseFirestore.getInstance();
-        if (basedatos.collection("Usuarios").document(correo)==null)
-        {
-            Map<String, Object> nuevoUsuario = new HashMap<>();
-            nuevoUsuario.put("idUsuario", user.getUid());
-            nuevoUsuario.put("fotoUsuario", user.getPhotoUrl().toString());
-            basedatos.collection("Usuarios").document(correo).set(nuevoUsuario);
-        }
+        documento=basedatos.collection("Usuarios").document(correo); //Documento que hace referencia al nuevo usuario
+        documento.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (!document.exists())
+                    {
+                        Map<String, Object> nuevoUsuario = new HashMap<>(); //Creamos un map para añadir un nuevo usuario
+                        nuevoUsuario.put("idUsuario", user.getUid());
+                        nuevoUsuario.put("fotoUsuario", user.getPhotoUrl().toString());
+                        basedatos.collection("Usuarios").document(correo).set(nuevoUsuario); //Si el usuaio se acaba de registrar, se crea un documento en la base de datos Usuario con sus datos
+                    }
+                }
+            }
+        });
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -62,8 +74,8 @@ public class Main2Activity extends AppCompatActivity
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_friend, R.id.nav_votaciones,
-                R.id.nav_ranking, R.id.nav_perfil, R.id.nav_listas)
+                R.id.nav_home, R.id.nav_friend, R.id.nav_perfil,
+                R.id.nav_ranking, R.id.nav_listas_globales, R.id.nav_listas)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -82,7 +94,7 @@ public class Main2Activity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        //Añadimos los items a la barra
         getMenuInflater().inflate(R.menu.main2, menu);
         return true;
     }
@@ -97,13 +109,12 @@ public class Main2Activity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        switch (item.getItemId())
+        switch (item.getItemId()) //Obtenemos el identificador de el botón de arriba a la derecha
         {
-            case R.id.cerrarSesion:
+            case R.id.cerrarSesion: //Si se pulsa sobre cerrar sesión entonces cerrarla
                  AuthUI.getInstance().signOut(Main2Activity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
                      public void onComplete(@NonNull Task<Void> task) {
-                         Intent intencion = new Intent(Main2Activity.this, LoginActivity.class);
-                         intencion.putExtra("miParametro", "valorParametro"); //pasar un parametro a la siguiente actividad
+                         Intent intencion = new Intent(Main2Activity.this, LoginActivity.class); //Volvemos a la pantalla de iniciar sesión
                          startActivity(intencion);
                          finish();
                      }

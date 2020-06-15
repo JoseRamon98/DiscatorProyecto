@@ -12,6 +12,15 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
+        <EditText android:id="@+id/textoBuscarArtista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button android:id="@+id/buscarArtista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Buscar"/>
+
         <ListView
             android:id="@+id/listadoArtistas"
             android:layout_width="match_parent"

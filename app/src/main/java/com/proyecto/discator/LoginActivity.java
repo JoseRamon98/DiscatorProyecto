@@ -1,14 +1,12 @@
 package com.proyecto.discator;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +20,7 @@ public class LoginActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        googleLogin();
+        googleLogin(); //Iniciamos sesión mediante el botón de google
     }
 
     private void googleLogin()
@@ -44,10 +42,8 @@ public class LoginActivity extends AppCompatActivity
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                //Se ha registrado correctamente
                 Intent intencion = new Intent(this, Main2Activity.class);
-                intencion.putExtra("miParametro", "valorParametro"); //pasar un parametro a la siguiente actividad
                 startActivity(intencion);
             } else {
                 response.getError();

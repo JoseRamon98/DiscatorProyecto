@@ -24,17 +24,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="#A797D6">
                 <TextView android:id="@+id/numeroDeVotosAmigo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_gravity="center" />
 
                 <TextView android:id="@+id/MediDeVotosAmigo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"/>
         </LinearLayout>
 
         <TextView
