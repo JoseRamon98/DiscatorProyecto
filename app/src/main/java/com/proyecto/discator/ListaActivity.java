@@ -145,6 +145,8 @@ public class ListaActivity extends AppCompatActivity {
                                                                             discos.add(textoAlbum);
                                                                             coleccionListas.document(nombreLista).update("Album", discos); //Aadimos el nombre del album a la lista
                                                                             finish();
+                                                                        }else {
+                                                                            textoAlbumView.setError("El album no existe");
                                                                         }
                                                                     }
                                                                 }
